@@ -19,7 +19,7 @@ export const useForm = (form) => {
       if (Array.isArray(form[prop])) {
         auxForm[prop] = [...fillArray(form[prop])];
       } else {
-        auxForm[prop] = { ...fillObject(form[prop], auxForm[prop]) };
+        auxForm[prop] = { ...fillObject(form[prop]) };
       }
     }
 
@@ -30,7 +30,11 @@ export const useForm = (form) => {
    //* fill the objects in the array with the id, and the rest of the fields 
    *=============================================**/
 
-  const fillObject = (mainElement) => {
+  const fillObject = (element) => {
+    let mainElement = element;
+    if (typeof mainElement !== "object") mainElement = { value: mainElement };
+    fixValueAndType(mainElement);
+
     const id = Math.random() * Math.pow(10, 18).toString().padStart(18, "0");
 
     const nextElement = {
@@ -86,7 +90,7 @@ export const useForm = (form) => {
 
         break;
 
-      default:
+      case "object":
         if (!value) nextElement.value = {};
         else {
           if (typeof value === "object") nextElement.value = { ...value };
@@ -97,11 +101,33 @@ export const useForm = (form) => {
         }
 
         break;
+
+      default:
+        throw new Error(`The type "${nextElement.type}" is an invalid type`);
     }
 
     return nextElement;
   };
   /*=============== END OF SECTION ==============*/
+
+  /**========================================================================
+  //* Fixing the values and types 
+ *========================================================================**/
+
+  const fixValueAndType = (element) => {
+    if (element.value && element.type) {
+      if (typeof element.value !== element.type) {
+        throw new Error(
+          `The value "${element.value}" is not of type "${element.type}"`
+        );
+      }
+    }
+    if (element.value && !element.type) {
+      const type = typeof element.value;
+      element.type = type;
+    }
+  };
+  /*============================ END OF SECTION ============================*/
 
   /**============================================
 //* fill the array with the rest of the objects or arrays
@@ -111,21 +137,10 @@ export const useForm = (form) => {
     let newArray = [];
 
     for (let i = 0; i < arrayElement.length; i++) {
-      if (
-        typeof arrayElement[i] === "object" &&
-        !Array.isArray(arrayElement[i])
-      ) {
+      if (!Array.isArray(arrayElement[i])) {
         newArray.push({ ...fillObject(arrayElement[i]) });
       } else {
-        if (Array.isArray(arrayElement[i])) {
-          newArray.push([...fillArray(arrayElement[i])]);
-        } else {
-          throw new Error(
-            `The element "${JSON.stringify(
-              arrayElement[i]
-            )}" is not allowed in the "${JSON.stringify(form)}"`
-          );
-        }
+        newArray.push([...fillArray(arrayElement[i])]);
       }
     }
 
@@ -188,7 +203,7 @@ export const useForm = (form) => {
 
   /*============================ END OF SECTION ============================*/
   /**========================================================================
-   * fillWithNewValue, set the new value in the input              
+   * fillWithNewValue, set the new value in the input
    *========================================================================**/
 
   const fillWithNewValue = (element, value) => {
@@ -539,7 +554,7 @@ export const useForm = (form) => {
       valid: true,
     };
     for (let i = 0; i < validations.length; i++) {
-      const validation = validations[i]({...field});
+      const validation = validations[i]({ ...field });
 
       if (validation) {
         isValid.valid = false;

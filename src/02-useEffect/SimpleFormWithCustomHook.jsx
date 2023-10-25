@@ -12,9 +12,10 @@ export const SimpleFormWithCustomHook = () => {
     isValidForm,
   } = useForm({
     email: {
-      value: "ramsesgleztoledo@gmail.com",
+      value: "ramsesgleztoledo@gmail",
       validations: [validations.isEmail],
     },
+    // email: "ramsesgleztoledo@gmail.com",
     // username: [
     //   { value: 2, type: "number" },
     //   { value: "link", type: "string" },
@@ -43,9 +44,11 @@ export const SimpleFormWithCustomHook = () => {
     //   [
     //     { value: 333, type: "number", id: 38, validations: [] },
     //     [{ type: "array" }],
-    //     {}
+    //     {},
     //   ],
     //   {},
+    //   3,
+    //   33,
     // ],
   });
 
@@ -164,7 +167,7 @@ export const SimpleFormWithCustomHook = () => {
       <button
         className="btn btn-primary mt-2 float-end"
         onClick={() => console.log(formState)}
-        disabled={isValidField(["email"]).valid ? false : true}
+        disabled={isValidField(["email"]) ? false : true}
       >
         print form
       </button>
@@ -173,6 +176,12 @@ export const SimpleFormWithCustomHook = () => {
         onClick={() => onFormReset({}, false)}
       >
         reset form
+      </button>
+      <button
+        className="btn btn-primary mt-2"
+        onClick={() => onFormReset({}, true)}
+      >
+        reset form by default
       </button>
       {/* <button
         className="btn btn-primary mt-2"
@@ -202,7 +211,7 @@ export const SimpleFormWithCustomHook = () => {
       <h3>email</h3>
       <h1>{JSON.stringify(isValidField(["email"]))}</h1>
       <h3>password</h3>
-      <h1>{JSON.stringify(isValidField(["password"]))}</h1>
+      <h1>{JSON.stringify(isValidField(["password"], true))}</h1>
       <hr />
       <h2>Form</h2>
       <h1>{JSON.stringify(isValidForm(true))}</h1>

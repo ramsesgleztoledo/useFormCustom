@@ -3,9 +3,10 @@ import { CounterApp } from "./01-useState/CounterApp";
 import { CounterWithCustomHook } from "./01-useState/CounterWithCustomHook";
 import { SimpleForm } from "./02-useEffect/SimpleForm";
 import { SimpleFormWithCustomHook } from "./02-useEffect/SimpleFormWithCustomHook";
+import { MultipleCustomHooka } from "./03-examples/MultipleCustomHooka";
 
 export const HooksApp = () => {
-  const [items, setItems] = useState([false, false, false, true]);
+  const [items, setItems] = useState([false, false, false, false, true]);
 
   return (
     <>
@@ -122,6 +123,34 @@ export const HooksApp = () => {
             >
               <div className="accordion-body">
                 <SimpleFormWithCustomHook></SimpleFormWithCustomHook>
+              </div>
+            </div>
+          )}
+        </div>
+        <div className="accordion-item">
+          <h2 className="accordion-header">
+            <button
+              className="accordion-button"
+              type="button"
+              onClick={() => {
+                items[4] = !items[4];
+
+                setItems([...items]);
+                console.log(items);
+              }}
+            >
+              MultipleCustomHooka
+            </button>
+          </h2>
+          {items[4] === true && (
+            <div
+              id="collapseOne"
+              className="accordion-collapse collapse show"
+              data-bs-parent="#accordionExample"
+              // style={{ display: !items[3] && "none" }}
+            >
+              <div className="accordion-body">
+                <MultipleCustomHooka></MultipleCustomHooka>
               </div>
             </div>
           )}
