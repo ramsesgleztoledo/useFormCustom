@@ -13,8 +13,14 @@ export const SimpleFormWithCustomHook = () => {
   } = useForm({
     email: {
       value: "ramsesgleztoledo@gmail",
-      validations: [validations.isEmail],
+      validations: [
+        validations.isEmail,
+        validations.pattern(
+          /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
+        ),
+      ],
     },
+    other: [{ value: [1, 2, 3] }],
     // email: "ramsesgleztoledo@gmail.com",
     // username: [
     //   { value: 2, type: "number" },
@@ -53,7 +59,7 @@ export const SimpleFormWithCustomHook = () => {
   });
 
   return (
-    <div style={{ backgroundColor: "#e2bcdd" }}>
+    <div style={{ backgroundColor: "#d3d3d3" }}>
       <h1>Simple Form with custom hook</h1>
       <hr />
       <input
@@ -209,12 +215,20 @@ export const SimpleFormWithCustomHook = () => {
       </button>
       <h2>Fields</h2>
       <h3>email</h3>
-      <h1>{JSON.stringify(isValidField(["email"]))}</h1>
+      <code>
+        {" "}
+        <pre>{JSON.stringify(isValidField(["email"]))}</pre>
+      </code>
       <h3>password</h3>
-      <h1>{JSON.stringify(isValidField(["password"], true))}</h1>
+      <code>
+        <pre>{JSON.stringify(isValidField(["password"], true))}</pre>
+      </code>
       <hr />
       <h2>Form</h2>
-      <h1>{JSON.stringify(isValidForm(true))}</h1>
+      <code>
+        {" "}
+        <pre>{JSON.stringify(isValidForm(true))}</pre>
+      </code>
       <hr />
     </div>
   );

@@ -115,15 +115,20 @@ export const useForm = (form) => {
  *========================================================================**/
 
   const fixValueAndType = (element) => {
-    if (element.value && element.type) {
+    if (element.value !== undefined && element.value !== null && element.type) {
       if (typeof element.value !== element.type) {
         throw new Error(
           `The value "${element.value}" is not of type "${element.type}"`
         );
       }
     }
-    if (element.value && !element.type) {
-      const type = typeof element.value;
+    if (
+      element.value !== undefined &&
+      element.value !== null &&
+      !element.type
+    ) {
+      let type = typeof element.value;
+      if (Array.isArray(element.value)) type = "array";
       element.type = type;
     }
   };
@@ -202,8 +207,9 @@ export const useForm = (form) => {
   };
 
   /*============================ END OF SECTION ============================*/
+
   /**========================================================================
-   * fillWithNewValue, set the new value in the input
+   //* fillWithNewValue, set the new value in the input
    *========================================================================**/
 
   const fillWithNewValue = (element, value) => {

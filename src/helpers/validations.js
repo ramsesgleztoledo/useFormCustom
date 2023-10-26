@@ -83,7 +83,6 @@ export default {
   pattern:
     (patter) =>
     ({ value }) => {
-      console.log(patter);
       if (!(patter instanceof RegExp))
         throw new Error(
           `Validation pattern can be applied only with a RegExp, patter: "${JSON.stringify(
@@ -92,7 +91,7 @@ export default {
         );
 
       if (patter.test(value)) return null;
-      else return { pattern: `${patter}` };
+      else return { notMatchPattern: `${patter}` };
     },
   //* match with the includes
   includes:

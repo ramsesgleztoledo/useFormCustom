@@ -1,11 +1,11 @@
 import { useCounter, useFetch } from "../hooks/";
-import { LoadingQuote, Quote } from "./";
+import { LoadingQuote, Quote } from "../03-examples";
 
 // import { useState } from "react";
 
 let isIncrease = true;
 
-export const MultipleCustomHooka = () => {
+export const Layout = () => {
   const { counter, increase, decrease } = useCounter(1);
   const {
     data,
