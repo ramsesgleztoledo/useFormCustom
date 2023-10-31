@@ -562,11 +562,26 @@ export const useForm = (form) => {
       valid: true,
     };
     for (let i = 0; i < validations.length; i++) {
+      if (typeof validations[i] !== "function")
+        throw new Error(
+          `A validation can be only a function. Field location: "${JSON.stringify(
+            fieldLocation
+          )}", validation value: "${JSON.stringify(validations[i])}"`
+        );
+
       const validation = validations[i]({ ...field });
 
       if (validation) {
-        isValid.valid = false;
-        isValid = { ...isValid, ...validation };
+        if (typeof validation === "object" && !Array.isArray(validation)) {
+          isValid.valid = false;
+          isValid = { ...isValid, ...validation };
+        } else {
+          throw new Error(
+            `A validation can only return an object or null. Returned value: "${JSON.stringify(
+              validation
+            )}"`
+          );
+        }
       }
     }
 

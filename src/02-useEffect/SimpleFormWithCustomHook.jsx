@@ -20,7 +20,7 @@ export const SimpleFormWithCustomHook = () => {
         ),
       ],
     },
-    other: [{ value: [1, 2, 3, 33] }],
+    other: [{ value: [1, 2, 3, 33] ,validations:[]}],
     // email: "ramsesgleztoledo@gmail.com",
     // username: [
     //   { value: 2, type: "number" },
