@@ -20,7 +20,7 @@ export const SimpleFormWithCustomHook = () => {
         ),
       ],
     },
-    other: [{ value: [1, 2, 3] }],
+    other: [{ value: [1, 2, 3, 33] }],
     // email: "ramsesgleztoledo@gmail.com",
     // username: [
     //   { value: 2, type: "number" },
@@ -217,17 +217,17 @@ export const SimpleFormWithCustomHook = () => {
       <h3>email</h3>
       <code>
         {" "}
-        <pre>{JSON.stringify(isValidField(["email"]))}</pre>
+        <pre>{JSON.stringify(isValidField(["email"]), null, 3)}</pre>
       </code>
       <h3>password</h3>
       <code>
-        <pre>{JSON.stringify(isValidField(["password"], true))}</pre>
+        <pre>{JSON.stringify(isValidField(["password"], true), null, 3)}</pre>
       </code>
       <hr />
       <h2>Form</h2>
       <code>
         {" "}
-        <pre>{JSON.stringify(isValidForm(true))}</pre>
+        <pre>{JSON.stringify(isValidForm(true), null, 3)}</pre>
       </code>
       <hr />
     </div>

@@ -1,9 +1,32 @@
-
-
 body {
   padding: 20px;
 }
 
 button {
   margin-right: 10px;
+}
+
+.vertical-line {
+  background-color: black;
+  border: none;
+  height: 100px;
+  transform: rotate(90deg);
+  width: 1px;
+}
+
+.line-vertical {
+  border-left: 1px solid black;
+  height: 100%;
+  margin-left: 10px;
+  margin-right: 10px;
+  opacity: 0.25;
+}
+
+.todo-list {
+  overflow-y: auto;
+  max-height: 80vh;
+}
+
+a {
+  margin-right: 5px;
 }

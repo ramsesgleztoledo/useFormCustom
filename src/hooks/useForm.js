@@ -116,9 +116,11 @@ export const useForm = (form) => {
 
   const fixValueAndType = (element) => {
     if (element.value !== undefined && element.value !== null && element.type) {
-      if (typeof element.value !== element.type) {
+      let elementType = typeof element.value;
+      if (Array.isArray(element.value)) elementType = "array";
+      if (elementType !== element.type) {
         throw new Error(
-          `The value "${element.value}" is not of type "${element.type}"`
+          `The value "${element.value}" is not of type"${element.type}"`
         );
       }
     }
@@ -154,8 +156,8 @@ export const useForm = (form) => {
 
   /*=============== END OF SECTION ==============*/
 
-  const defaultForm = prepareForm();
-  const [formState, setFormState] = useState(defaultForm);
+  // const defaultForm = prepareForm();
+  const [formState, setFormState] = useState(prepareForm());
   /*============================ END OF SECTION ============================*/
 
   /**=======================================================================================================================
@@ -355,7 +357,7 @@ export const useForm = (form) => {
  *========================================================================**/
 
   const resetForm = (original) => {
-    const newForm = { ...defaultForm };
+    const newForm = { ...prepareForm() };
 
     if (!original) {
       for (let prop in newForm) {
